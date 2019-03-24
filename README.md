@@ -12,8 +12,8 @@ pip install -r requirements.txt
 
 ## Examples
 ```
-python train.py --model MLP --lr 0.01 --lr_decay --scheduler 50 --epoch 100
-python train.py --model VGG19 --lr 0.1 --lr_decay 0.1 --scheduler 150,225,300 --epoch 350
+python train.py --model MLP --lr 0.01 --lr_decay --scheduler 50 --epochs 100
+python train.py --model VGG19 --lr 0.1 --lr_decay 0.1 --scheduler 150,225,300 --epochs 350
 ```
 Note that the __initial learning rate__ for MLP, LeNet and All-CNNs must be lower than __0.01__.
 
