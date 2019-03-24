@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-def GoogleNet(x, logits=False, training=False):
+def GoogLeNet(x, logits=False, training=False):
 
     def inception(z, in_planes, n1x1, n3x3red, n3x3, n5x5red, n5x5, pool_planes):
         # 1x1 conv branch

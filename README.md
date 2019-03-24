@@ -1,5 +1,5 @@
 # CIFAR-baselines-tf
-Baselines for CIFAR10 with [Tensorflow](https://www.tensorflow.org/).
+Baselines for CIFAR10 with [Tensorflow](https://www.tensorflow.org/)
 
 ## Dependencies
 - tensorflow 1.10.0+
@@ -24,18 +24,25 @@ Note that the __initial learning rate__ for MLP, LeNet and All-CNNs must be lowe
 | [LeNet](http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf)  |           |           |
 | [LeNetV2](https://github.com/wangjksjtu/CIFAR-baselines-tf/blob/master/models/lenet_v2.py)        |           |           |
 | [All-CNNs](https://arxiv.org/abs/1412.6806)       |           |           |
+| [VGG11](https://arxiv.org/abs/1409.1556)          |           |           |
+| [VGG13](https://arxiv.org/abs/1409.1556)          |           |           |
 | [VGG16](https://arxiv.org/abs/1409.1556)          |           |           |
 | [VGG19](https://arxiv.org/abs/1409.1556)          |           |           |
 | [ResNet18](https://arxiv.org/abs/1512.03385)      |           |           |
+| [ResNet34](https://arxiv.org/abs/1512.03385)      |           |           |
 | [ResNet50](https://arxiv.org/abs/1512.03385)      |           |           |
 | [ResNet101](https://arxiv.org/abs/1512.03385)     |           |           |
+| [ResNet152](https://arxiv.org/abs/1512.03385)     |           |           |
 | [Wide-ResNet](https://arxiv.org/pdf/1605.07146)   |           |           |
 | [GoogLeNet](https://arxiv.org/abs/1409.4842)      |           |           |
+
+<!-- TODO
 | [DenseNet121](https://arxiv.org/abs/1608.06993)   |           |           |
 | [MobileNet](https://arxiv.org/abs/1704.04861)     |           |           |
 | [MobileNetV2](https://arxiv.org/abs/1801.04381)   |           |           |
+-->
 
-<!-- 
+<!-- TODO*2
 | [ShuffleNet](https://arxiv.org/abs/1707.01083)    |           |           |
 | [ShuffleNetV2](https://arxiv.org/abs/1807.11164)  |           |           |
 -->

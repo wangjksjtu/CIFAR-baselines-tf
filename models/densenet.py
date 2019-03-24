@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 
-def DenseNet(x, logits=False, training=False, arch='DenseNet'):
+def DenseNet(x, logits=False, training=False, arch='DenseNet121'):
     cfg = {
         'DenseNet121': [[6,12,24,16], 32],
         'DenseNet169': [[6,12,32,32], 32],
