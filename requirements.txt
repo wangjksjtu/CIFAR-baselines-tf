@@ -1,0 +1,6 @@
+Keras==2.2.4
+tensorflow_gpu==1.10.0
+numpy==1.14.5
+tabulate==0.8.3
+pandas==0.24.2
+scipy==1.2.1

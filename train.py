@@ -1,18 +1,23 @@
 import argparse
 import math
 import os
+import time
 from importlib import import_module
 
 import numpy as np
 import tensorflow as tf
 from utils import *
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("--dataset", default="cifar", type=str, help='Dataset: mnist/cifar')
-parser.add_argument("--epochs", default=300, type=int, help='Epochs for training models')
+parser.add_argument("--epochs", default=350, type=int, help='Epochs for training models')
 parser.add_argument("--model", default="VGG16", type=str, help='Model architecture')
-parser.add_argument("--batch_size", default=128, type=int, help='Batch size training models')
+parser.add_argument("--batch_size", default=256, type=int, help='Batch size training models')
 parser.add_argument("--weight_decay", default=5e-4, type=float, help='Weight decay')
+parser.add_argument("--lr", default=0.1, type=float, help='Initial learning rate')
+parser.add_argument("--lr_decay", default=0.1, type=float, help='Learning rate decay')
+parser.add_argument("--scheduler", default="150,225,300", type=str, help='Learning rate scheduler')
+
 args = parser.parse_args()
 
 DATASET = args.dataset
@@ -20,6 +25,9 @@ MODEL = args.model
 EPOCHS = args.epochs
 batch_size = args.batch_size
 weight_decay = args.weight_decay
+initial_lr = args.lr
+scheduler = [int(x) for x in args.scheduler.split(",")]
+lr_decay = args.lr_decay
 
 models = import_module('models')
 assert DATASET in ["mnist", "cifar"]
@@ -29,11 +37,11 @@ if DATASET == "mnist":
 else:
     data = CIFAR10()
 
-fmt = {"lr": '.1f', "train_loss": '.4f', "train_acc": '.4f', "val_loss": '.4f', "val_acc": '.4f'}
+fmt = {"lr": '.4f', "train_loss": '.4f', "train_acc": '.4f', "val_loss": '.4f', "val_acc": '.4f'}
 logger = Logger(fmt=fmt, name=MODEL, base="./logs/"+DATASET)
 
 
-def evaluate(sess, env, X_data, y_data, batch_size=128):
+def evaluate(sess, env, X_data, y_data, batch_size=256, dest='test'):
     """
     Evaluate TF model by running env.loss and env.acc.
     """
@@ -46,22 +54,30 @@ def evaluate(sess, env, X_data, y_data, batch_size=128):
         start = batch * batch_size
         end = min(n_sample, start + batch_size)
         cnt = end - start
-        batch_loss, batch_acc = sess.run(
-            [env.loss, env.acc],
-            feed_dict={env.x: X_data[start:end],
-                       env.y: y_data[start:end],
-                       env.training: False})
+        batch_loss, batch_acc = sess.run([env.loss, env.acc],
+                                          feed_dict={env.x: X_data[start:end],
+                                                     env.y: y_data[start:end],
+                                                     env.training: False})
         loss += batch_loss * cnt
         acc += batch_acc * cnt
     loss /= n_sample
     acc /= n_sample
+
+    merged = sess.run(env.merged, 
+                      feed_dict={env.loss_ph: loss,
+                                 env.acc_ph: acc})
+
+    if dest == 'train':
+        env.train_writer.add_summary(merged, env.epoch)
+    else:
+        env.test_writer.add_summary(merged, env.epoch)
 
     # print(' loss: {0:.4f} acc: {1:.4f}'.format(loss, acc))
     return loss, acc
 
 
 def train(sess, env, X_data, y_data, X_val=None, y_val=None, epochs=1,
-          load=False, shuffle=True, batch_size=128, name='model', dataset='mnist'):
+          load=False, shuffle=True, batch_size=256, name='model', dataset='mnist'):
     """
     Train a TF model by running env.train_op.
     """
@@ -81,25 +97,27 @@ def train(sess, env, X_data, y_data, X_val=None, y_val=None, epochs=1,
     max_acc = 0
     for epoch in range(epochs):
         # print('\nEpoch {0}/{1}'.format(epoch + 1, epochs))
+        env.epoch = epoch
         if shuffle:
             ind = np.arange(n_sample)
             np.random.shuffle(ind)
             X_data = X_data[ind]
             y_data = y_data[ind]
 
+        loss, acc = 0, 0
         for batch in range(n_batch):
             # print(' batch {0}/{1}'.format(batch + 1, n_batch), end='\r')
             start = batch * batch_size
             end = min(n_sample, start + batch_size)
-            sess.run(env.train_op, feed_dict={env.x: X_data[start:end],
-                                              env.y: y_data[start:end],
-                                              env.training: True})
-            lr = sess.run(env.lr)
+            sess.run(env.train_op, 
+                     feed_dict={env.x: X_data[start:end],
+                                env.y: y_data[start:end],
+                                env.training: True})
 
         if X_val is not None:
-            train_loss, train_acc = evaluate(sess, env, X_data, y_data)
-            val_loss, val_acc = evaluate(sess, env, X_val, y_val)
-            logger.add_scalar(epoch, "lr", lr)
+            train_loss, train_acc = evaluate(sess, env, X_data, y_data, dest='train')
+            val_loss, val_acc = evaluate(sess, env, X_val, y_val, dest='test')
+            logger.add_scalar(epoch, "lr", sess.run(env.lr))
             logger.add_scalar(epoch, "train_loss", train_loss)
             logger.add_scalar(epoch, "train_acc", train_acc)
             logger.add_scalar(epoch, "val_loss", val_loss)
@@ -107,12 +125,18 @@ def train(sess, env, X_data, y_data, X_val=None, y_val=None, epochs=1,
             logger.iter_info()
 
         if max_acc < val_acc:
-            print('\nSaving model {:f} -> {:f}'.format(max_acc, train_acc))
+            print('\nSaving model {:f} -> {:f}'.format(max_acc, val_acc))
             max_acc = val_acc
-            env.saver.save(sess, 'saves/' + dataset + '/{}'.format(name))
+            save_dir = 'saves/' + dataset
+            if not os.path.exists(save_dir):
+                os.makedirs(save_dir)
+            env.saver.save(sess, save_dir + '/{}'.format(name))
+        
+    logger.print("")
+    logger.print("val_acc: %4f" % max_acc)
 
 
-def predict(sess, env, X_data, batch_size=128):
+def predict(sess, env, X_data, batch_size=256):
     """
     Do inference by running env.ybar.
     """
@@ -156,8 +180,10 @@ def main():
 
     env.global_step = tf.Variable(0, trainable=False)
     n_batch = math.ceil(x_train.shape[0] / float(batch_size))
-    boundaries = [150 * n_batch, 250 * n_batch]
-    values = [0.1, 0.01, 0.001]
+
+    boundaries = [x * n_batch for x in scheduler]
+    values = [initial_lr * lr_decay ** (n+1) for n in range(len(scheduler))]
+    values.insert(0, initial_lr)
     env.lr = tf.train.piecewise_constant(env.global_step, boundaries, values)
 
     with tf.variable_scope('model'+MODEL):
@@ -186,15 +212,34 @@ def main():
 
         env.saver = tf.train.Saver()
 
+    # Collecting summary
+    with tf.name_scope('summary'):
+        env.loss_ph = tf.placeholder(tf.float32,shape=None, name='loss')
+        tf.summary.scalar('loss', env.loss_ph)
+
+        env.acc_ph = tf.placeholder(tf.float32,shape=None, name='accuracy')
+        tf.summary.scalar('accuracy', env.acc_ph)
+
+        tf.summary.scalar('learning rate', env.lr)
+        env.merged = tf.summary.merge_all()
+
     # Initializing graph
     sess = tf.InteractiveSession()
     sess.run(tf.global_variables_initializer())
     sess.run(tf.local_variables_initializer())
 
+    summary_dir = 'saves/' + DATASET + "/" + MODEL
+    env.train_writer = tf.summary.FileWriter(os.path.join(summary_dir, 'train'), sess.graph)
+    env.test_writer = tf.summary.FileWriter(os.path.join(summary_dir, 'eval'), sess.graph)
+
     # Training
+    t_begin = time.time()
     train(sess, env, x_train, y_train, x_test, y_test, load=False, epochs=EPOCHS,
           name=MODEL, dataset=DATASET, batch_size=batch_size)
-
+    seconds = time.time() - t_begin
+    m, s = divmod(seconds, 60)
+    h, m = divmod(m, 60)
+    logger.print("total_time: %d:%02d:%02d" % (h, m, s))
 
 if __name__ == "__main__":
     main()
