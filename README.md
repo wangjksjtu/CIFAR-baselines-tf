@@ -1,5 +1,5 @@
 # CIFAR-baselines-tf
-Baselines for CIFAR10 with tensorflow
+Baselines for CIFAR10 with [Tensorflow](https://www.tensorflow.org/).
 
 ## Dependencies
 - tensorflow 1.10.0+
@@ -7,7 +7,7 @@ Baselines for CIFAR10 with tensorflow
 
 #### Install the dependencies using `pip`:
 ```
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Examples
@@ -29,6 +29,7 @@ Note that the __initial learning rate__ for MLP, LeNet and All-CNNs must be lowe
 | [ResNet18](https://arxiv.org/abs/1512.03385)      |           |           |
 | [ResNet50](https://arxiv.org/abs/1512.03385)      |           |           |
 | [ResNet101](https://arxiv.org/abs/1512.03385)     |           |           |
+| [Wide-ResNet](https://arxiv.org/pdf/1605.07146)   |           |           |
 | [GoogLeNet](https://arxiv.org/abs/1409.4842)      |           |           |
 | [DenseNet121](https://arxiv.org/abs/1608.06993)   |           |           |
 | [MobileNet](https://arxiv.org/abs/1704.04861)     |           |           |
