@@ -49,7 +49,6 @@ Note that the __initial learning rate__ for MLP, LeNet and All-CNNs should be se
 | [ResNet152](https://arxiv.org/abs/1512.03385)     |           |           |
 | [WideResNet](https://arxiv.org/pdf/1605.07146)    |           |           |
 | [GoogLeNet](https://arxiv.org/abs/1409.4842)      |           |           |
->>>>>>> Stashed changes
 
 <!-- TODO
 | [DenseNet121](https://arxiv.org/abs/1608.06993)   |           |           |
