@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFo
 parser.add_argument("--dataset", default="cifar", type=str, help='Dataset: mnist/cifar')
 parser.add_argument("--epochs", default=350, type=int, help='Epochs for training models')
 parser.add_argument("--model", default="VGG16", type=str, help='Model architecture')
-parser.add_argument("--batch_size", default=256, type=int, help='Batch size training models')
+parser.add_argument("--batch_size", default=128, type=int, help='Batch size training models')
 parser.add_argument("--weight_decay", default=5e-4, type=float, help='Weight decay')
 parser.add_argument("--lr", default=0.1, type=float, help='Initial learning rate')
 parser.add_argument("--lr_decay", default=0.1, type=float, help='Learning rate decay')
