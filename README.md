@@ -31,7 +31,6 @@ Note that the __initial learning rate__ for MLP, LeNet and All-CNNs should be se
 | [VGG19](https://arxiv.org/abs/1409.1556)          | 88.87%    | 2:44:27   |
 
 #### Data Augmentation
-=======
 | Model             | Acc.        | Time        | 
 | ----------------- |:-----------:|:-----------:|
 | [MLP](https://github.com/wangjksjtu/CIFAR-baselines-tf/blob/master/models/mlp.py)     |           |           |
