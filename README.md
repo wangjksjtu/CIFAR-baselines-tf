@@ -18,23 +18,16 @@ python train.py --model VGG19 --lr 0.1 --lr_decay 0.1 --scheduler 150,225,300 --
 Note that the __initial learning rate__ for MLP, LeNet and All-CNNs should be set as __0.01__.
 
 ## Accuracy
-| Model             | Acc.        | Time        | 
-| ----------------- |:-----------:|:-----------:|
-| [MLP](https://github.com/wangjksjtu/CIFAR-baselines-tf/blob/master/models/mlp.py)     |           |           |
-| [LeNet](http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf)  |           |           |
-| [LeNetV2](https://github.com/wangjksjtu/CIFAR-baselines-tf/blob/master/models/lenet_v2.py)        | 74.46%    | 0:35:36   |
-| [All-CNNs](https://arxiv.org/abs/1412.6806)       | 82.06%    | 3:06:17   |
-| [VGG11](https://arxiv.org/abs/1409.1556)          | 86.58%    | 1:45:01   |
-| [VGG13](https://arxiv.org/abs/1409.1556)          |           |           |
-| [VGG16](https://arxiv.org/abs/1409.1556)          |           |           |
+| Model             | Accuracy    | Time        | Model             | Accuracy    | Time        |
+| ----------------- |:-----------:|:-----------:| ----------------- |:-----------:|:-----------:|
+| [MLP](https://github.com/wangjksjtu/CIFAR-baselines-tf/blob/master/models/mlp.py)     |           |           | [ResNet18](https://arxiv.org/abs/1512.03385)      |           |           |
+| [LeNet](http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf)  |           |           | [ResNet34](https://arxiv.org/abs/1512.03385)      |           |           |
+| [LeNetV2](https://github.com/wangjksjtu/CIFAR-baselines-tf/blob/master/models/lenet_v2.py)        | 74.46%    | 0:35:36   | [ResNet50](https://arxiv.org/abs/1512.03385)      |           |           |
+| [All-CNNs](https://arxiv.org/abs/1412.6806)       | 82.06%    | 3:06:17   | [ResNet101](https://arxiv.org/abs/1512.03385)     |           |           |
+| [VGG11](https://arxiv.org/abs/1409.1556)          | 86.58%    | 1:45:01   | [ResNet152](https://arxiv.org/abs/1512.03385)     |           |           |
+| [VGG13](https://arxiv.org/abs/1409.1556)          |           |           | [Wide-ResNet](https://arxiv.org/pdf/1605.07146)   |           |           |
+| [VGG16](https://arxiv.org/abs/1409.1556)          |           |           | [GoogLeNet](https://arxiv.org/abs/1409.4842)      |           |           |
 | [VGG19](https://arxiv.org/abs/1409.1556)          |           |           |
-| [ResNet18](https://arxiv.org/abs/1512.03385)      |           |           |
-| [ResNet34](https://arxiv.org/abs/1512.03385)      |           |           |
-| [ResNet50](https://arxiv.org/abs/1512.03385)      |           |           |
-| [ResNet101](https://arxiv.org/abs/1512.03385)     |           |           |
-| [ResNet152](https://arxiv.org/abs/1512.03385)     |           |           |
-| [Wide-ResNet](https://arxiv.org/pdf/1605.07146)   |           |           |
-| [GoogLeNet](https://arxiv.org/abs/1409.4842)      |           |           |
 
 <!-- TODO
 | [DenseNet121](https://arxiv.org/abs/1608.06993)   |           |           |
