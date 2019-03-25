@@ -18,6 +18,7 @@ python train.py --model VGG19 --lr 0.1 --lr_decay 0.1 --scheduler 150,225,300 --
 Note that the __initial learning rate__ for MLP, LeNet and All-CNNs should be set as __0.01__.
 
 ## Accuracy
+#### No Data Augmentation
 | Model             | Accuracy    | Time        | Model             | Accuracy    | Time        |
 | ----------------- |:-----------:|:-----------:| ----------------- |:-----------:|:-----------:|
 | [MLP](https://github.com/wangjksjtu/CIFAR-baselines-tf/blob/master/models/mlp.py)     |           |           | [ResNet18](https://arxiv.org/abs/1512.03385)      |           |           |
@@ -28,6 +29,8 @@ Note that the __initial learning rate__ for MLP, LeNet and All-CNNs should be se
 | [VGG13](https://arxiv.org/abs/1409.1556)          |           |           | [Wide-ResNet](https://arxiv.org/pdf/1605.07146)   |           |           |
 | [VGG16](https://arxiv.org/abs/1409.1556)          |           |           | [GoogLeNet](https://arxiv.org/abs/1409.4842)      |           |           |
 | [VGG19](https://arxiv.org/abs/1409.1556)          |           |           |
+
+#### Data Augmentation
 
 <!-- TODO
 | [DenseNet121](https://arxiv.org/abs/1608.06993)   |           |           |
