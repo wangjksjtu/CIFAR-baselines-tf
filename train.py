@@ -63,7 +63,7 @@ def evaluate(sess, env, X_data, y_data, batch_size=256, dest='test'):
     loss /= n_sample
     acc /= n_sample
 
-    merged = sess.run(env.merged, 
+    merged = sess.run(env.merged,
                       feed_dict={env.loss_ph: loss,
                                  env.acc_ph: acc})
 
@@ -104,12 +104,11 @@ def train(sess, env, X_data, y_data, X_val=None, y_val=None, epochs=1,
             X_data = X_data[ind]
             y_data = y_data[ind]
 
-        loss, acc = 0, 0
         for batch in range(n_batch):
             # print(' batch {0}/{1}'.format(batch + 1, n_batch), end='\r')
             start = batch * batch_size
             end = min(n_sample, start + batch_size)
-            sess.run(env.train_op, 
+            sess.run(env.train_op,
                      feed_dict={env.x: X_data[start:end],
                                 env.y: y_data[start:end],
                                 env.training: True})

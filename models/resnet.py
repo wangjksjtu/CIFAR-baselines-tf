@@ -24,7 +24,7 @@ def ResNet(x, logits=False, training=False, arch='ResNet18'):
             z = tf.layers.batch_normalization(z, training=training)
 
             shortcut = tf.identity(x)
-            if stride != 1 or in_planes != planes:
+            if stride != 1 or in_planes != planes * expansion:
                 shortcut = tf.layers.conv2d(shortcut, filters=expansion*planes,
                                             kernel_size=[1, 1],
                                             padding='same', use_bias=False,
@@ -46,7 +46,7 @@ def ResNet(x, logits=False, training=False, arch='ResNet18'):
 
             z = tf.layers.conv2d(z, filters=planes, kernel_size=[3, 3],
                                  padding='same', use_bias=False,
-                                 stride=(stride, stride))
+                                 strides=(stride, stride))
             z = tf.layers.batch_normalization(z, training=training)
             z = tf.nn.relu(z)
 
@@ -55,7 +55,7 @@ def ResNet(x, logits=False, training=False, arch='ResNet18'):
             z = tf.layers.batch_normalization(z, training=training)
 
             shortcut = tf.identity(x)
-            if stride != 1 or in_planes != planes:
+            if stride != 1 or in_planes != planes * expansion:
                 shortcut = tf.layers.conv2d(shortcut, filters=expansion*planes,
                                             kernel_size=[1, 1],
                                             padding='same', use_bias=False,
@@ -64,6 +64,8 @@ def ResNet(x, logits=False, training=False, arch='ResNet18'):
 
             z += shortcut
             z = tf.nn.relu(z)
+        
+        return z
 
     def _global_avg_pool(x):
         assert x.get_shape().ndims == 4

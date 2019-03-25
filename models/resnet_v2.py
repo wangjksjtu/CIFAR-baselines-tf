@@ -1,4 +1,5 @@
 import tensorflow as tf
+import numpy as np
 
 def WideResNet(x, logits=False, training=False):
     # WideResNet-34 (Madry's Lab CIFAR Challenge)
