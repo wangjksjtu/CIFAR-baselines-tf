@@ -22,9 +22,9 @@ Note that the __initial learning rate__ for MLP, LeNet and All-CNNs must be lowe
 | ----------------- |:-----------:|:-----------:|
 | [MLP](https://github.com/wangjksjtu/CIFAR-baselines-tf/blob/master/models/mlp.py)     |           |           |
 | [LeNet](http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf)  |           |           |
-| [LeNetV2](https://github.com/wangjksjtu/CIFAR-baselines-tf/blob/master/models/lenet_v2.py)        |           |           |
-| [All-CNNs](https://arxiv.org/abs/1412.6806)       |           |           |
-| [VGG11](https://arxiv.org/abs/1409.1556)          |           |           |
+| [LeNetV2](https://github.com/wangjksjtu/CIFAR-baselines-tf/blob/master/models/lenet_v2.py)        | 0.7446    | 0:35:36   |
+| [All-CNNs](https://arxiv.org/abs/1412.6806)       | 0.8206    | 3:06:17   |
+| [VGG11](https://arxiv.org/abs/1409.1556)          | 0.8658    | 1:45:01   |
 | [VGG13](https://arxiv.org/abs/1409.1556)          |           |           |
 | [VGG16](https://arxiv.org/abs/1409.1556)          |           |           |
 | [VGG19](https://arxiv.org/abs/1409.1556)          |           |           |
