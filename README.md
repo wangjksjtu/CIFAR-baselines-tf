@@ -25,7 +25,7 @@ Note that the __initial learning rate__ for MLP, LeNet and All-CNNs should be se
 | [LeNet](http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf)  | 63.37%    | 0:09:50   | [ResNet34](https://arxiv.org/abs/1512.03385)      | 88.84%    | 6:58:28    |
 | [LeNetV2](https://github.com/wangjksjtu/CIFAR-baselines-tf/blob/master/models/lenet_v2.py)        | 74.46%    | 0:35:36   | [ResNet50](https://arxiv.org/abs/1512.03385)      | 88.55%    | 7:00:00   |
 | [All-CNNs](https://arxiv.org/abs/1412.6806)       | 82.06%    | 3:06:17   | [ResNet101](https://arxiv.org/abs/1512.03385)     | 90.57%    | 23:20:10  |
-| [VGG11](https://arxiv.org/abs/1409.1556)          | 86.58%    | 1:45:01   | [ResNet152](https://arxiv.org/abs/1512.03385)     | 90.45%    |           |
+| [VGG11](https://arxiv.org/abs/1409.1556)          | 86.58%    | 1:45:01   | [ResNet152](https://arxiv.org/abs/1512.03385)     | 90.47%    | 34:03:33  |
 | [VGG13](https://arxiv.org/abs/1409.1556)          | 89.44%    | 2:13:31   | [Wide-ResNet](https://arxiv.org/pdf/1605.07146)   | 92.08%    | 29:09:18  |
 | [VGG16](https://arxiv.org/abs/1409.1556)          | 88.68%    | 10:02:00  | [GoogLeNet](https://arxiv.org/abs/1409.4842)      | 91.05%    | 17:40:48  |
 | [VGG19](https://arxiv.org/abs/1409.1556)          | 88.87%    | 2:44:27   |
