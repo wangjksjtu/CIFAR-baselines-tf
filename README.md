@@ -41,7 +41,6 @@ Note that the __initial learning rate__ for MLP, LeNet and All-CNNs should be se
 | [VGG13](https://arxiv.org/abs/1409.1556)          | 89.79%    | 2:12:53   | [Wide-ResNet](https://arxiv.org/pdf/1605.07146)   | 91.20%    | 28:26:08  |
 | [VGG16](https://arxiv.org/abs/1409.1556)          | 90.02%    | 5:57:29   | [GoogLeNet](https://arxiv.org/abs/1409.4842)      | 92.19%    | 16:23:14  |
 | [VGG19](https://arxiv.org/abs/1409.1556)          | 89.80%    | 3:09:36   |
->>>>>>> 2a181e6d38398fd34e5b3c13d0c017026a428230
 
 <!-- TODO
 | [DenseNet121](https://arxiv.org/abs/1608.06993)   |           |           |
