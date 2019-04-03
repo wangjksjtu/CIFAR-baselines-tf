@@ -17,12 +17,15 @@ def VGG(x, logits=False, training=False, arch='VGG16'):
         else:
             with tf.variable_scope('conv' + str(i)):
                 z = tf.layers.conv2d(z, filters=param, kernel_size=[3, 3],
-                                     padding='same', activation=tf.nn.relu)
-                # z = _batch_norm(z)
+                                     padding='same')
                 z = tf.layers.batch_normalization(z, training=training)
+                z = tf.nn.relu(z)
+    z = tf.layers.max_pooling2d(z, pool_size=[1, 1], strides=1)
 
     with tf.variable_scope('mlp'):
         z = tf.layers.flatten(z)
+
+    # without FC4096-FC4096-FC1000
 
     logits_ = tf.layers.dense(z, units=10, name='logits')
     y = tf.nn.softmax(logits_, name='ybar')

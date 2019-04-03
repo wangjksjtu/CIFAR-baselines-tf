@@ -53,7 +53,7 @@ class MNIST():
 
 
 class CIFAR10():
-    def __init__(self, one_hot=True, shuffle=False, augument=False):
+    def __init__(self, one_hot=True, shuffle=False, augment=True):
         self.x_train, self.y_train, self.x_test, self.y_test = self.load_data(one_hot)
         self.num_train = self.x_train.shape[0]
         self.num_test = self.x_test.shape[0]
@@ -61,7 +61,7 @@ class CIFAR10():
         # self.x_train = tf.map_fn(lambda frame: tf.image.per_image_standardization(frame), self.x_train)
         # self.x_test = tf.map_fn(lambda frame: tf.image.per_image_standardization(frame), self.x_test)
 
-        if augument: self.x_train, self.y_train = self.augument_data()
+        if augment: self.x_train, self.y_train = self.augment_data()
         if shuffle: self.shuffle_data()
 
     def load_data(self, one_hot):
@@ -85,13 +85,14 @@ class CIFAR10():
     def shuffle_data(self):
         ind = np.random.permutation(self.num_train)
         self.x_train, self.y_train = self.x_train[ind], self.y_train[ind]
-    
-    def augument_data(self):
+
+    def augment_data(self):
         image_generator = ImageDataGenerator(
-            rotation_range=90,
+            # samplewise_std_normalization=True,
+            # rotation_range=90,
             # zoom_range = 0.05, 
-            width_shift_range=0.1,
-            height_shift_range=0.1,
+            # width_shift_range=0.1,
+            # height_shift_range=0.1,
             horizontal_flip=True,
             # vertical_flip=True,
             )
@@ -101,7 +102,9 @@ class CIFAR10():
         x_train, y_train = image_generator.flow(self.x_train, self.y_train,
                                                 batch_size=self.num_train, 
                                                 shuffle=False).next()
-
+        
+        self.x_train = tf.image.resize_image_with_crop_or_pad(self.x_train,40, 40)
+        self.x_train = tf.random_crop(self.x_train, size=(self.x_train.shape[0],32,32,3))
         return x_train, y_train
 
 

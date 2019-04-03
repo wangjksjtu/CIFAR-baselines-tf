@@ -183,6 +183,7 @@ def main():
     boundaries = [x * n_batch for x in scheduler]
     values = [initial_lr * lr_decay ** (n+1) for n in range(len(scheduler))]
     values.insert(0, initial_lr)
+    # print(env.global_step, boundaries, values)
     env.lr = tf.train.piecewise_constant(env.global_step, boundaries, values)
 
     with tf.variable_scope('model'+MODEL):

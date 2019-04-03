@@ -9,3 +9,4 @@ from models.resnet import *
 from models.resnet_v2 import *
 from models.mobilenet import *
 from models.mobilenet_v2 import *
+from models.test_resnet import *
